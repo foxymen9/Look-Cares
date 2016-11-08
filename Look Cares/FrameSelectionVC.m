@@ -179,17 +179,17 @@
 }
 
 - (IBAction)onBtnCodeReader:(id)sender {
-    if ([self.scanner isScanning] || self.captureIsFrozen) {
-        [self stopScanning];
-    } else {
-        [MTBBarcodeScanner requestCameraPermissionWithSuccess:^(BOOL success) {
-            if (success) {
-                [self startScanning];
-            } else {
-                [self displayPermissionMissingAlert];
-            }
-        }];
-    }
+//    if ([self.scanner isScanning] || self.captureIsFrozen) {
+//        [self stopScanning];
+//    } else {
+//        [MTBBarcodeScanner requestCameraPermissionWithSuccess:^(BOOL success) {
+//            if (success) {
+//                [self startScanning];
+//            } else {
+//                [self displayPermissionMissingAlert];
+//            }
+//        }];
+//    }
 }
 
 - (IBAction)onBtnDone:(id)sender {
