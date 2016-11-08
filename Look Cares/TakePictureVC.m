@@ -2,7 +2,7 @@
 //  TakePictureVC.m
 //  Look Cares
 //
-//  Created by Bendt Jensen on 06/11/16.
+//  Created by Fox Man on 06/11/16.
 //  Copyright © 2016 The Lookup Company. All rights reserved.
 //
 
@@ -48,7 +48,6 @@
         [self takePhoto:sourceType];
     }];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         [alert dismissViewControllerAnimated:YES completion:nil];
     }];
     

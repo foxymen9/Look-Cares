@@ -2,7 +2,7 @@
 //  InStoreLocationSelectionVC.h
 //  Look Cares
 //
-//  Created by Bendt Jensen on 05/11/16.
+//  Created by Fox Man on 05/11/16.
 //  Copyright © 2016 The Lookup Company. All rights reserved.
 //
 
