@@ -179,26 +179,26 @@
 }
 
 - (IBAction)onBtnCodeReader:(id)sender {
-//    if ([self.scanner isScanning] || self.captureIsFrozen) {
-//        [self stopScanning];
-//    } else {
-//        [MTBBarcodeScanner requestCameraPermissionWithSuccess:^(BOOL success) {
-//            if (success) {
-//                [self startScanning];
-//            } else {
-//                [self displayPermissionMissingAlert];
-//            }
-//        }];
-//    }
+    if ([self.scanner isScanning] || self.captureIsFrozen) {
+        [self stopScanning];
+    } else {
+        [MTBBarcodeScanner requestCameraPermissionWithSuccess:^(BOOL success) {
+            if (success) {
+                [self startScanning];
+            } else {
+                [self displayPermissionMissingAlert];
+            }
+        }];
+    }
 }
 
 - (IBAction)onBtnDone:(id)sender {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//    InStoreLocationSelectionVC *ilsvc = [storyboard instantiateViewControllerWithIdentifier:@"InStoreLocationSelectionVC"];
-//    [self.navigationController pushViewController:ilsvc animated:YES];
+    InStoreLocationSelectionVC *ilsvc = [storyboard instantiateViewControllerWithIdentifier:@"InStoreLocationSelectionVC"];
+    [self.navigationController pushViewController:ilsvc animated:YES];
     
-    RemoveFabricVC *rfvc = [storyboard instantiateViewControllerWithIdentifier:@"RemoveFabricVC"];
-    [self.navigationController pushViewController:rfvc animated:YES];
+//    RemoveFabricVC *rfvc = [storyboard instantiateViewControllerWithIdentifier:@"RemoveFabricVC"];
+//    [self.navigationController pushViewController:rfvc animated:YES];
 }
 
 - (IBAction)onBtnReverse:(id)sender {

@@ -10,6 +10,8 @@
 
 @interface TakePictureVC : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
-- (IBAction)onBtnOpenCamera:(id)sender;
+
 @property (weak, nonatomic) IBOutlet UIImageView *imgPhoto;
+- (IBAction)onBtnTakePicture:(id)sender;
+- (IBAction)onBtnDone:(id)sender;
 @end

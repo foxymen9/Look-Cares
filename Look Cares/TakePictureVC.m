@@ -7,6 +7,8 @@
 //
 
 #import "TakePictureVC.h"
+#import "FrameSelectionVC.h"
+#import "LoginVC.h"
 
 @interface TakePictureVC ()
 {
@@ -37,25 +39,7 @@
 */
 
 - (IBAction)onBtnOpenCamera:(id)sender {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Choose a Photo" message:@"Please choose a photo." preferredStyle:UIAlertControllerStyleActionSheet];
     
-    UIAlertAction *cameraAction = [UIAlertAction actionWithTitle:@"Take Photo" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
-        [self takePhoto:sourceType];
-    }];
-    UIAlertAction *galleryAction = [UIAlertAction actionWithTitle:@"Choose Photo from Gallery" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        [self takePhoto:sourceType];
-    }];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [alert dismissViewControllerAnimated:YES completion:nil];
-    }];
-    
-    [alert addAction:cameraAction];
-    [alert addAction:galleryAction];
-    [alert addAction:cancelAction];
-    
-    [self presentViewController:alert animated:YES completion:nil];
 }
 
 -(void) takePhoto:(UIImagePickerControllerSourceType)sourceType {
@@ -82,5 +66,44 @@
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [picker dismissViewControllerAnimated:YES completion:nil];
+}
+- (IBAction)onBtnTakePicture:(id)sender {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Choose a Photo" message:@"Please choose a photo." preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *cameraAction = [UIAlertAction actionWithTitle:@"Take Photo" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self takePhoto:sourceType];
+    }];
+    UIAlertAction *galleryAction = [UIAlertAction actionWithTitle:@"Choose Photo from Gallery" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        [self takePhoto:sourceType];
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [alert dismissViewControllerAnimated:YES completion:nil];
+    }];
+    
+    [alert addAction:cameraAction];
+    [alert addAction:galleryAction];
+    [alert addAction:cancelAction];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (IBAction)onBtnDone:(id)sender {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"Make more changes?" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        FrameSelectionVC *lsVC = [storyboard instantiateViewControllerWithIdentifier:@"FrameSelectionVC"];
+        [self.navigationController pushViewController:lsVC animated:YES];
+    }];
+    UIAlertAction *noAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        LoginVC *lVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginVC"];
+        [self.navigationController pushViewController:lVC animated:YES];
+    }];
+    [alert addAction:yesAction];
+    [alert addAction:noAction];
+    [self presentViewController:alert animated:YES completion:nil];
+
 }
 @end
