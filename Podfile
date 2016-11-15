@@ -9,6 +9,7 @@ target 'Look Cares' do
     # Pods for Look Cares
     pod 'AFNetworking', '~>2.0'
     pod 'MBProgressHUD'
+    pod 'TestFairy'
     
     target 'Look CaresTests' do
         inherit! :search_paths

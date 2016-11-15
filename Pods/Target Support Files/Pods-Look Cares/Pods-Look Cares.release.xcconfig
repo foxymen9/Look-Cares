@@ -1,9 +1,12 @@
 ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO
+DEBUG_INFORMATION_FORMAT = dwarf-with-dsym
 FRAMEWORK_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/AFNetworking" "$PODS_CONFIGURATION_BUILD_DIR/MBProgressHUD"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/TestFairy"
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
-OTHER_CFLAGS = $(inherited) -iquote "$PODS_CONFIGURATION_BUILD_DIR/AFNetworking/AFNetworking.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/MBProgressHUD/MBProgressHUD.framework/Headers"
-OTHER_LDFLAGS = $(inherited) -framework "AFNetworking" -framework "MBProgressHUD"
+LIBRARY_SEARCH_PATHS = $(inherited) "$(PODS_ROOT)/TestFairy"
+OTHER_CFLAGS = $(inherited) -iquote "$PODS_CONFIGURATION_BUILD_DIR/AFNetworking/AFNetworking.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/MBProgressHUD/MBProgressHUD.framework/Headers" -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/TestFairy"
+OTHER_LDFLAGS = $(inherited) -l"TestFairy" -framework "AFNetworking" -framework "AVFoundation" -framework "CoreMedia" -framework "CoreMotion" -framework "MBProgressHUD" -framework "OpenGLES" -framework "SystemConfiguration" -framework "UIKit"
 PODS_BUILD_DIR = $BUILD_DIR
 PODS_CONFIGURATION_BUILD_DIR = $PODS_BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_ROOT = ${SRCROOT}/Pods

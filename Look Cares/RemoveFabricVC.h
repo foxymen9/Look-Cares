@@ -19,5 +19,6 @@
 - (IBAction)onBtnSelect1:(id)sender;
 - (IBAction)onBtnSelect2:(id)sender;
 - (IBAction)onBtnRemove:(id)sender;
+- (IBAction)onBtnBack:(id)sender;
 
 @end

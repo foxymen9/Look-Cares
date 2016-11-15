@@ -21,15 +21,18 @@ PODS:
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - MBProgressHUD (1.0.0)
+  - TestFairy (1.8.0)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
   - MBProgressHUD
+  - TestFairy
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
+  TestFairy: 2c8949075dd7ccc7783fc75c24390266d2c6a77f
 
-PODFILE CHECKSUM: 449d10866ed6e82f5bdcb0b60d1c211314dec8a1
+PODFILE CHECKSUM: 7170322f0304257a2fb72d12a52410a955c32c30
 
 COCOAPODS: 1.1.1

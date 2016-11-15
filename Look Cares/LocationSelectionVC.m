@@ -47,13 +47,18 @@
 
 - (IBAction)onBtnSelect:(id)sender {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    FrameSelectionVC *lsVC = [storyboard instantiateViewControllerWithIdentifier:@"FrameSelectionVC"];
-    [self.navigationController pushViewController:lsVC animated:YES];
+    FrameSelectionVC *fsVC = [storyboard instantiateViewControllerWithIdentifier:@"FrameSelectionVC"];
+    fsVC.type = @"frame";
+    [self.navigationController pushViewController:fsVC animated:YES];
 }
 - (IBAction)onBtnCancel:(id)sender {
     [self.viewPopup setHidden:YES];
 }
 - (IBAction)onBtnSelectPopup:(id)sender {
+}
+
+- (IBAction)onBtnBack:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - UITableView DataSource

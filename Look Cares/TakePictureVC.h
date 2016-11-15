@@ -14,4 +14,5 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imgPhoto;
 - (IBAction)onBtnTakePicture:(id)sender;
 - (IBAction)onBtnDone:(id)sender;
+- (IBAction)onBtnBack:(id)sender;
 @end

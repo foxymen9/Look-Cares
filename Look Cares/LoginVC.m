@@ -8,6 +8,9 @@
 
 #import "LoginVC.h"
 #import "LocationSelectionVC.h"
+#import "MBProgressHUD.h"
+#import "WebConnector.h"
+#import "Global.h"
 
 @interface LoginVC ()
 
@@ -32,11 +35,10 @@
 - (void)viewWillAppear:(BOOL)animated {
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     if ([[prefs objectForKey:@"RememberMe"] boolValue] == true) {
-        
+        NSDictionary *owner = [prefs objectForKey:@"CurrentUser"][0];
     }
     else
     {
-        
     }
 }
 
@@ -60,10 +62,61 @@
         [_imgTick setImage:[UIImage imageNamed:@"tick_big"]];
 }
 - (void)loginProcess:(NSString *)email password:(NSString *)password {
-    
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     LocationSelectionVC *lsVC = [storyboard instantiateViewControllerWithIdentifier:@"LocationSelectionVC"];
     [self.navigationController pushViewController:lsVC animated:YES];
+//    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    
+//    WebConnector *webConnector = [[WebConnector alloc] init];
+//    [webConnector login:email password:password completionHandler:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        [MBProgressHUD hideHUDForView:self.view animated:YES];
+//        
+//        NSMutableDictionary *result = (NSMutableDictionary *)responseObject;
+//        if ([result[@"status"] isEqualToString:@"success"]) {
+//            NSDictionary *owner = result[@"owner"];
+//            if (owner != nil) {
+//                NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+//                [prefs setObject:owner forKey:@"CurrentUser"];
+//                
+//                if (self.isChecked) {
+//                    [prefs setObject:[NSNumber numberWithBool:true] forKey:@"RememberMe"];
+//                } else {
+//                    [prefs removeObjectForKey:@"RememberMe"];
+//                }
+//                
+//                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//                LocationSelectionVC *lsVC = [storyboard instantiateViewControllerWithIdentifier:@"LocationSelectionVC"];
+//                [self.navigationController pushViewController:lsVC animated:YES];
+//                
+//                
+//                self.txtEmail.text = @"";
+//                self.txtPassword.text = @"";
+//                self.isChecked = false;
+//                [self updateCheckBox];
+//                [self.view endEditing:YES];
+//                
+//            } else {
+//                NSString *url = [NSString stringWithFormat:@"%@index.php/Login/LoginProcess?email=%@&password=%@", BASE_URL, email, password];
+//                [[UIApplication sharedApplication] openURL:[NSURL URLWithString: url]];
+//                
+//                self.txtEmail.text = @"";
+//                self.txtPassword.text = @"";
+//            }
+//        }
+//        else {
+//            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"Failed to login" preferredStyle:UIAlertControllerStyleAlert];
+//            UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+//            [alert addAction:defaultAction];
+//            [self presentViewController:alert animated:YES completion:nil];
+//        }
+//    } errorHandler:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        [MBProgressHUD hideHUDForView:self.view animated:YES];
+//        
+//        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"Failed to login" preferredStyle:UIAlertControllerStyleAlert];
+//        UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+//        [alert addAction:defaultAction];
+//        [self presentViewController:alert animated:YES completion:nil];
+//    }];
 }
 
 - (IBAction)onBtnCheck:(id)sender {
@@ -77,15 +130,13 @@
     NSString *email = self.txtEmail.text;
     NSString *password = self.txtPassword.text;
     
-//    if ([email isEqualToString:@""] || [password isEqualToString:@""]) {
-//        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"Please fill all fields!" preferredStyle:UIAlertControllerStyleAlert];
-//        UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
-//        [alert addAction:defaultAction];
-//        
-//        [self presentViewController:alert animated:YES completion:nil];
-//        return;
-//    }
-//    
+    if ([email isEqualToString:@""] || [password isEqualToString:@""]) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"Please fill all fields!" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:defaultAction];
+        [self presentViewController:alert animated:YES completion:nil];
+        return;
+    }
 //    if ([Utility validateEmailWithString:email]) {
 //        
 //    }

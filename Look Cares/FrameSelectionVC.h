@@ -10,11 +10,14 @@
 
 @interface FrameSelectionVC : UIViewController
 
+@property NSString *type;
+
 @property (weak, nonatomic) IBOutlet UIView *viewTextInput;
 @property (weak, nonatomic) IBOutlet UIView *viewCodeReader;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 - (IBAction)segBtnTapped:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextField *txtSerialNumber;
+@property (weak, nonatomic) IBOutlet UILabel *lbl_title;
 
 @property (weak, nonatomic) IBOutlet UIButton *btnCodeReader;
 - (IBAction)onBtnCodeReader:(id)sender;
@@ -23,6 +26,7 @@
 
 - (IBAction)onBtnReverse:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *lblSerialNumber;
+- (IBAction)onBtnBack:(id)sender;
 
 
 @end

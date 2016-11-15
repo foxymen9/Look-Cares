@@ -93,8 +93,10 @@
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"Make more changes?" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        FrameSelectionVC *lsVC = [storyboard instantiateViewControllerWithIdentifier:@"FrameSelectionVC"];
-        [self.navigationController pushViewController:lsVC animated:YES];
+        FrameSelectionVC *fsvc = [storyboard instantiateViewControllerWithIdentifier:@"FrameSelectionVC"];
+        
+        [self.navigationController pushViewController:fsvc animated:YES];
+        fsvc.type = @"frame";
     }];
     UIAlertAction *noAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -105,5 +107,9 @@
     [alert addAction:noAction];
     [self presentViewController:alert animated:YES completion:nil];
 
+}
+
+- (IBAction)onBtnBack:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 @end

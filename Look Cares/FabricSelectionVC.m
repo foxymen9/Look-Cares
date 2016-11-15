@@ -69,10 +69,7 @@
 - (IBAction)onBtnDone:(id)sender {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     TakePictureVC *ilsvc = [storyboard instantiateViewControllerWithIdentifier:@"TakePictureVC"];
-    [self.navigationController pushViewController:ilsvc animated:YES];
-    
-    //    RemoveFabricVC *rfvc = [storyboard instantiateViewControllerWithIdentifier:@"RemoveFabricVC"];
-    //    [self.navigationController pushViewController:rfvc animated:YES];
+    [self.navigationController pushViewController:ilsvc animated:YES];  
 }
 
 @end

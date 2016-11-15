@@ -8,6 +8,7 @@
 
 #import "RemoveFabricVC.h"
 #import "FabricSelectionVC.h"
+#import "FrameSelectionVC.h"
 
 @interface RemoveFabricVC ()
 {
@@ -67,7 +68,12 @@
     //    InStoreLocationSelectionVC *ilsvc = [storyboard instantiateViewControllerWithIdentifier:@"InStoreLocationSelectionVC"];
     //    [self.navigationController pushViewController:ilsvc animated:YES];
     
-    FabricSelectionVC *fsvc = [storyboard instantiateViewControllerWithIdentifier:@"FabricSelectionVC"];
+    FrameSelectionVC *fsvc = [storyboard instantiateViewControllerWithIdentifier:@"FrameSelectionVC"];
+    fsvc.type = @"fabric";
     [self.navigationController pushViewController:fsvc animated:YES];
+}
+
+- (IBAction)onBtnBack:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 @end

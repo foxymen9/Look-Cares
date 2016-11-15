@@ -9,6 +9,7 @@
 #import "InStoreLocationSelectionVC.h"
 #import "LocationTableViewCell.h"
 #import "FabricSelectionVC.h"
+#import "FrameSelectionVC.h"
 
 @interface InStoreLocationSelectionVC ()
 
@@ -85,7 +86,12 @@
 
 - (IBAction)onSelect:(id)sender {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    FabricSelectionVC *fsvc = [storyboard instantiateViewControllerWithIdentifier:@"FabricSelectionVC"];
+    FrameSelectionVC *fsvc = [storyboard instantiateViewControllerWithIdentifier:@"FrameSelectionVC"];
+    fsvc.type = @"fabric";
     [self.navigationController pushViewController:fsvc animated:YES];
+}
+
+- (IBAction)onBtnBack:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 @end

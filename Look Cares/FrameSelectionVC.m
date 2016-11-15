@@ -10,6 +10,7 @@
 #import "InstoreLocationSelectionVC.h"
 #import "RemoveFabricVC.h"
 #import "MTBBarcodeScanner.h"
+#import "TakePictureVC.h"
 
 @interface FrameSelectionVC ()
 
@@ -31,6 +32,12 @@
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                 action:@selector(handleTapSubView:)];
     [self.viewTextInput addGestureRecognizer:singleTap];
+    if ([self.type isEqualToString:@"frame"]) {
+        [self.lbl_title setText:@"Frame Selection"];
+    }
+    else if ([self.type isEqualToString:@"fabric"]) {
+        [self.lbl_title setText:@"Fabric Selection"];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -194,8 +201,16 @@
 
 - (IBAction)onBtnDone:(id)sender {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    InStoreLocationSelectionVC *ilsvc = [storyboard instantiateViewControllerWithIdentifier:@"InStoreLocationSelectionVC"];
-    [self.navigationController pushViewController:ilsvc animated:YES];
+    if ([self.type isEqualToString:@"frame"])
+    {
+        InStoreLocationSelectionVC *ilsvc = [storyboard instantiateViewControllerWithIdentifier:@"InStoreLocationSelectionVC"];
+        [self.navigationController pushViewController:ilsvc animated:YES];
+    }
+    else
+    {
+        TakePictureVC *ilsvc = [storyboard instantiateViewControllerWithIdentifier:@"TakePictureVC"];
+        [self.navigationController pushViewController:ilsvc animated:YES];
+    }
     
 //    RemoveFabricVC *rfvc = [storyboard instantiateViewControllerWithIdentifier:@"RemoveFabricVC"];
 //    [self.navigationController pushViewController:rfvc animated:YES];
@@ -203,5 +218,8 @@
 
 - (IBAction)onBtnReverse:(id)sender {
     [self.scanner flipCamera];
+}
+- (IBAction)onBtnBack:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 @end
