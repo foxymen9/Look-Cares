@@ -26,6 +26,8 @@
 
 //alert
 //+ (void) showMessage: (NSString *) message title:(NSString *) title cancel:(NSString *)cancel;
+//access token
++(NSString*) getAccessToken;
 //UUID
 +(NSString*) genUUID;
 

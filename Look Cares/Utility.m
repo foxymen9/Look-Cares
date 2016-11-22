@@ -69,10 +69,17 @@
     }
     
     return newDir;
+ }
+
++(NSString*) getAccessToken
+{
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    NSDictionary *currentUser = [prefs objectForKey:@"CurrentUser"];
+    return [currentUser objectForKey:@"token"];
 }
 
 
-+(NSString*) genUUID;
++(NSString*) genUUID
 {
     CFUUIDRef newUniqueID = CFUUIDCreate(kCFAllocatorDefault);
     CFStringRef newUniqueIDString = CFUUIDCreateString(kCFAllocatorDefault, newUniqueID);

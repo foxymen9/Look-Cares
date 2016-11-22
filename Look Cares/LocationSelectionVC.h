@@ -19,5 +19,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 - (IBAction)onBtnSelectPopup:(id)sender;
 - (IBAction)onBtnBack:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *lblClient;
+@property (weak, nonatomic) IBOutlet UILabel *lblLocation;
 
 @end

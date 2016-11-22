@@ -11,13 +11,21 @@
 #import "RemoveFabricVC.h"
 #import "MTBBarcodeScanner.h"
 #import "TakePictureVC.h"
+#import "MBProgressHUD.h"
+#import "Global.h"
+#import "WebConnector.h"
 
 @interface FrameSelectionVC ()
-
+{
+    NSString *inputType, *serialNumber;
+    NSMutableDictionary *frame;
+    NSArray *fabrics;
+}
 @property (nonatomic, strong) MTBBarcodeScanner *scanner;
 @property (nonatomic, strong) NSMutableArray *uniqueCodes;
 @property (nonatomic, assign) BOOL captureIsFrozen;
 @property (nonatomic, assign) BOOL didShowCaptureWarning;
+
 
 @end
 
@@ -33,11 +41,17 @@
                                                                                 action:@selector(handleTapSubView:)];
     [self.viewTextInput addGestureRecognizer:singleTap];
     if ([self.type isEqualToString:@"frame"]) {
+        [self.txtSerialNumber setText:@"SN06281600015"];
         [self.lbl_title setText:@"Frame Selection"];
     }
     else if ([self.type isEqualToString:@"fabric"]) {
         [self.lbl_title setText:@"Fabric Selection"];
     }
+    
+    inputType = [[NSString alloc] initWithFormat:@"nfc"];
+    [self.viewCodeReader setHidden:YES];
+    [self.viewTextInput setHidden:YES];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -83,6 +97,7 @@
                 NSLog(@"Found unique code: %@", code.stringValue);
                 // Update the tableview
                 [self.lblSerialNumber setText:code.stringValue];
+                serialNumber = code.stringValue;
             }
         }
     } error:&error];
@@ -98,9 +113,6 @@
 
     self.captureIsFrozen = NO;
 }
-
-
-
 
 #pragma mark - Helper Methods
 
@@ -164,24 +176,68 @@
     // Pass the selected object to the new view controller.
 }
 */
+#pragma mark - self methods
+- (void)saveToGlobal{
+    [Global sharedInstance].frame = frame;
+    [Global sharedInstance].fabrics = fabrics;
+}
 
+- (void)getFrame:(NSString*) number{
+    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    WebConnector *webConnector = [[WebConnector alloc] init];
+    [webConnector getFrame:number completionHandler:^(NSURLSessionTask *task, id responseObject)  {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        
+        NSMutableDictionary *result = (NSMutableDictionary *)responseObject;
+        if (result) {
+            frame = [result objectForKey:@"frame"];
+            fabrics = [result objectForKey:@"fabrics"];
+            NSString *checkInstall = [frame objectForKey:@"vcInstalled"];
+            [self saveToGlobal];
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            NSLog(@"frame:%@", frame);
+            NSLog(@"fabrics:%@", fabrics);
+            if ([checkInstall isEqualToString:@"Uninstalled"])
+            {
+                InStoreLocationSelectionVC *ilsvc = [storyboard instantiateViewControllerWithIdentifier:@"InStoreLocationSelectionVC"];
+                [self.navigationController pushViewController:ilsvc animated:YES];
+            }
+            else
+            {
+                RemoveFabricVC *rfvc = [storyboard instantiateViewControllerWithIdentifier:@"RemoveFabricVC"];
+                [self.navigationController pushViewController:rfvc animated:YES];
+            }
+        }
+    } errorHandler:^(NSURLSessionTask *operation, NSError *error) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"Invalid Serial Number." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:defaultAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }];
+}
 
 
 - (IBAction)segBtnTapped:(id)sender {
     if (self.segmentedControl.selectedSegmentIndex == 0) {
-        [self.viewCodeReader setHidden:NO];
+        [self.viewCodeReader setHidden:YES];
         [self.viewTextInput setHidden:YES];
         [self.btnCodeReader setImage:[UIImage imageNamed:@"icon_barcode"] forState:UIControlStateNormal];
+        [self.lblSerialNumber setHidden:YES];
         
     }
     else if (self.segmentedControl.selectedSegmentIndex == 1) {
         [self.viewCodeReader setHidden:NO];
         [self.viewTextInput setHidden:YES];
         [self.btnCodeReader setImage:[UIImage imageNamed:@"icon_barcode"] forState:UIControlStateNormal];
+        [self.lblSerialNumber setHidden:NO];
     }
     else if (self.segmentedControl.selectedSegmentIndex == 2) {
         [self.viewCodeReader setHidden:YES];
         [self.viewTextInput setHidden:NO];
+        [self.lblSerialNumber setHidden:YES];
     }
 }
 
@@ -201,19 +257,26 @@
 
 - (IBAction)onBtnDone:(id)sender {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    if (self.segmentedControl.selectedSegmentIndex == 1)
+    {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"Please select the serial number. NFC is not available for now." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:defaultAction];
+        [self presentViewController:alert animated:YES completion:nil];
+        return;
+    }
+    if (self.segmentedControl.selectedSegmentIndex == 2)
+        serialNumber = self.txtSerialNumber.text;
     if ([self.type isEqualToString:@"frame"])
     {
-        InStoreLocationSelectionVC *ilsvc = [storyboard instantiateViewControllerWithIdentifier:@"InStoreLocationSelectionVC"];
-        [self.navigationController pushViewController:ilsvc animated:YES];
+        [self getFrame:serialNumber];
     }
     else
     {
+        [Global sharedInstance].fabricSerialNumber = serialNumber;
         TakePictureVC *ilsvc = [storyboard instantiateViewControllerWithIdentifier:@"TakePictureVC"];
         [self.navigationController pushViewController:ilsvc animated:YES];
     }
-    
-//    RemoveFabricVC *rfvc = [storyboard instantiateViewControllerWithIdentifier:@"RemoveFabricVC"];
-//    [self.navigationController pushViewController:rfvc animated:YES];
 }
 
 - (IBAction)onBtnReverse:(id)sender {

@@ -18,5 +18,6 @@
 - (IBAction)onBtnSelectLocation:(id)sender;
 - (IBAction)onSelect:(id)sender;
 - (IBAction)onBtnBack:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *lbl_storeTitle;
 
 @end

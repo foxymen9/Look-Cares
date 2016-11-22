@@ -9,6 +9,10 @@
 #import "TakePictureVC.h"
 #import "FrameSelectionVC.h"
 #import "LoginVC.h"
+#import "MBProgressHUD.h"
+#import "Global.h"
+#import "WebConnector.h"
+
 
 @interface TakePictureVC ()
 {
@@ -41,6 +45,8 @@
 - (IBAction)onBtnOpenCamera:(id)sender {
     
 }
+
+#pragma mark - Self Methods
 
 -(void) takePhoto:(UIImagePickerControllerSourceType)sourceType {
     if ([UIImagePickerController isSourceTypeAvailable:sourceType])
@@ -90,6 +96,17 @@
 }
 
 - (IBAction)onBtnDone:(id)sender {
+    if (!self.imgPhoto.image)
+    {
+        return;
+    }
+    NSString *clientKey =  [[Global sharedInstance].selectedClient objectForKey:@"kLookClient"];
+    NSString *clientLocationKey = [[Global sharedInstance].selectedLocation objectForKey:@"kLookClientCustomer"];
+    NSString *frameKey = [[Global sharedInstance].frame objectForKey:@"kFrame"];
+    NSString *width = [NSString stringWithFormat:@"%f", self.imgPhoto.image.size.width];
+    NSString *height = [NSString stringWithFormat:@"%f", self.imgPhoto.image.size.height];
+    NSString *extrusion = @"Stretch";
+    
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"Make more changes?" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -105,8 +122,28 @@
     }];
     [alert addAction:yesAction];
     [alert addAction:noAction];
-    [self presentViewController:alert animated:YES completion:nil];
-
+    
+        
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    WebConnector *webConnector = [[WebConnector alloc] init];
+    [webConnector addFabric:clientKey clientLocationKey:clientLocationKey frameKey:frameKey height:height width:width extrusion:extrusion image:self.imgPhoto.image completionHandler:^(NSURLSessionTask *task, id responseObject){
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        
+        [self presentViewController:alert animated:YES completion:nil];
+        
+        NSMutableDictionary *result = (NSMutableDictionary *)responseObject;
+        NSLog(@"AddFabric:@%@", result);
+        if (result) {
+            
+        }
+    } errorHandler:^(NSURLSessionTask *operation, NSError *error) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"Failed to upload." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:defaultAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }];
 }
 
 - (IBAction)onBtnBack:(id)sender {

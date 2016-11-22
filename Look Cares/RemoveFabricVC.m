@@ -9,6 +9,9 @@
 #import "RemoveFabricVC.h"
 #import "FabricSelectionVC.h"
 #import "FrameSelectionVC.h"
+#import "MBProgressHUD.h"
+#import "Global.h"
+#import "WebConnector.h"
 
 @interface RemoveFabricVC ()
 {
@@ -24,6 +27,26 @@
     isFirstImage = false;
     isSecondImage = false;
     [self updateImageStatus];
+    if ([Global sharedInstance].fabrics.count > 0)
+    {
+        NSString *imgUrl = [[[Global sharedInstance].fabrics objectAtIndex:0] objectForKey:@"vcFileName"];
+        NSURL *url = [NSURL URLWithString:imgUrl];
+        NSData *data = [NSData dataWithContentsOfURL:url];
+        UIImage *image = [UIImage imageWithData:data];
+        self.img1.image = image;
+//        dispatch_async(dispatch_get_global_queue(0,0), ^{
+//            NSData * data = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString:imgUrl]];
+//            if ( data == nil )
+//                return;
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                // WARNING: is the cell still using the same data by this point??
+//                self.img1.image = [UIImage imageWithData: data];
+//            });
+//        });
+        
+//        NSData * imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString:imgUrl]];
+//        self.img1.image = [UIImage imageWithData: imageData];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,7 +63,7 @@
     // Pass the selected object to the new view controller.
 }
 */
-
+#pragma mark - Self Methods
 - (void)updateImageStatus {
     if (isFirstImage)
         [self.btnSelect1 setImage:[UIImage imageNamed:@"chb_rounded"] forState:UIControlStateNormal];
@@ -52,6 +75,9 @@
         [self.btnSelect2 setImage:nil forState:UIControlStateNormal];
 }
 
+-(void) removeFabric {
+    
+}
 
 - (IBAction)onBtnSelect1:(id)sender {
     isFirstImage = !isFirstImage;

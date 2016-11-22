@@ -8,11 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-#define BASE_URL         @"http://pdtowerapp.com/"
-//#define BASE_URL         @"http://192.168.0.87/porsche/"
+//#define BASE_URL         @"http://pdtowerapp.com/"
+#define BASE_URL         @"http://192.168.0.112:56789/"
 
 @interface Global : NSObject
 
 + (Global *)sharedInstance;
-
+@property (strong, nonatomic, readwrite) NSDictionary *selectedClient, *selectedLocation, *frame, *selectedStoreLocation;
+@property (strong, nonatomic, readwrite) NSArray *fabrics;
+@property (strong, nonatomic, readwrite) NSString *fabricSerialNumber;
 @end

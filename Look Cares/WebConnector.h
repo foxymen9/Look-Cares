@@ -9,13 +9,20 @@
 #import <Foundation/Foundation.h>
 #import "AFNetworking.h"
 
+
 @interface WebConnector : NSObject {
-    AFHTTPRequestOperationManager *httpManager;
+    AFHTTPSessionManager *httpManager;
     NSString *baseUrl;
 }
 
-typedef void (^CompleteBlock)(AFHTTPRequestOperation *operation, id responseObject);
-typedef void (^ErrorBlock)(AFHTTPRequestOperation *operation, NSError *error);
+typedef void (^CompleteBlock)(NSURLSessionTask *task, id responseObject);
+typedef void (^ErrorBlock)(NSURLSessionTask *operation, NSError *error);
 
 - (void)login:(NSString *)email password:(NSString *)password completionHandler:(CompleteBlock)completed errorHandler:(ErrorBlock)errorBlock;
+- (void)getAllClients:(CompleteBlock)completed errorHandler:(ErrorBlock)errorBlock;
+- (void)getLocationsWithClient:(NSString*)clientKey completionHandler:(CompleteBlock)completed errorHandler:(ErrorBlock)errorBlock;
+- (void)getFrame:(NSString*)serialNumber  completionHandler:(CompleteBlock)completed errorHandler:(ErrorBlock)errorBlock;
+- (void)getStoreLocations:(CompleteBlock)completed errorHandler:(ErrorBlock)errorBlock;
+- (void)getFabric:(NSString*)serialNumber  completionHandler:(CompleteBlock)completed errorHandler:(ErrorBlock)errorBlock;
+- (void)addFabric:(NSString *)clientKey clientLocationKey:(NSString *)clientLocationKey frameKey:(NSString*)frameKey height:(NSString*)height width:(NSString*)width extrusion:(NSString*)extrusion image:(UIImage*)image completionHandler:(CompleteBlock)completed errorHandler:(ErrorBlock)errorBlock;
 @end
