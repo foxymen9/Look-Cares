@@ -733,7 +733,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lookcares.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4445debf-4286-4c6d-9115-ae2e840bc5f4";
+				PROVISIONING_PROFILE = "45e878a0-9122-4ba7-ae23-7edf15be7eae";
 				PROVISIONING_PROFILE_SPECIFIER = "lookcares test dev";
 			};
 			name = Debug;
@@ -743,11 +743,13 @@
 			baseConfigurationReference = 8E92C777DF5396ACFAFF7064 /* Pods-Look Cares.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 9FX43XXU4W;
 				INFOPLIST_FILE = "Look Cares/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lookcares.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "45e878a0-9122-4ba7-ae23-7edf15be7eae";
+				PROVISIONING_PROFILE_SPECIFIER = "lookcares test dev";
 			};
 			name = Release;
 		};

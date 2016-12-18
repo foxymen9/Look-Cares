@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 //#define BASE_URL         @"http://pdtowerapp.com/"
-#define BASE_URL         @"http://192.168.0.112:56789/"
+#define BASE_URL         @"http://192.168.0.111:56789/"
 
 @interface Global : NSObject
 
