@@ -71,24 +71,46 @@
     NSString *url = [NSString stringWithFormat:@"Frames/Fabric/%@", serialNumber];
     [httpManager GET:url parameters:nil success:completed failure:errorBlock];
 }
-- (void)addFabric:(NSString *)clientKey clientLocationKey:(NSString *)clientLocationKey frameKey:(NSString*)frameKey height:(NSString*)height width:(NSString*)width extrusion:(NSString*)extrusion image:(UIImage*)image completionHandler:(CompleteBlock)completed errorHandler:(ErrorBlock)errorBlock {
+- (void)addFabric:(NSString *)serialNumber clientKey:(NSString*)clientKey clientLocationKey:(NSString *)clientLocationKey frameKey:(NSString*)frameKey completionHandler:(CompleteBlock)completed errorHandler:(ErrorBlock)errorBlock {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    [parameters setObject:serialNumber forKey:@"SerialNumber"];
     [parameters setObject:clientKey forKey:@"ClientKey"];
     [parameters setObject:clientLocationKey forKey:@"ClientLocationKey"];
     [parameters setObject:frameKey forKey:@"FrameKey"];
-    [parameters setObject:height forKey:@"Height"];
-    [parameters setObject:width forKey:@"Width"];
-    [parameters setObject:extrusion forKey:@"Extrusion"];
     
     httpManager.requestSerializer = [AFJSONRequestSerializer serializer];
     NSString *token = [NSString stringWithFormat:@"base %@", [Utility getAccessToken]];
     [httpManager.requestSerializer setValue:token forHTTPHeaderField:@"Authorization"];
     
+    [httpManager POST:@"Frames/Fabric" parameters:parameters success:completed failure:errorBlock];
     
-    NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
-    [httpManager POST:@"Frames/Fabric" parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-        [formData appendPartWithFormData:imageData name:@"image"];
-    } success:completed failure:errorBlock];
+}
+//- (void)addFabric:(NSString *)clientKey clientLocationKey:(NSString *)clientLocationKey frameKey:(NSString*)frameKey height:(NSString*)height width:(NSString*)width extrusion:(NSString*)extrusion image:(UIImage*)image completionHandler:(CompleteBlock)completed errorHandler:(ErrorBlock)errorBlock {
+//    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+//    [parameters setObject:clientKey forKey:@"ClientKey"];
+//    [parameters setObject:clientLocationKey forKey:@"ClientLocationKey"];
+//    [parameters setObject:frameKey forKey:@"FrameKey"];
+//    [parameters setObject:height forKey:@"Height"];
+//    [parameters setObject:width forKey:@"Width"];
+//    [parameters setObject:extrusion forKey:@"Extrusion"];
+//    
+//    httpManager.requestSerializer = [AFJSONRequestSerializer serializer];
+//    NSString *token = [NSString stringWithFormat:@"base %@", [Utility getAccessToken]];
+//    [httpManager.requestSerializer setValue:token forHTTPHeaderField:@"Authorization"];
+//    
+//    
+//    NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
+//    [httpManager POST:@"Frames/Fabric" parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+//        [formData appendPartWithFormData:imageData name:@"image"];
+//    } success:completed failure:errorBlock];
+//    
+//}
+- (void)removeFabric:(NSString*)fabricKey  completionHandler:(CompleteBlock)completed errorHandler:(ErrorBlock)errorBlock{
+    httpManager.requestSerializer = [AFJSONRequestSerializer serializer];
+    NSString *token = [NSString stringWithFormat:@"base %@", [Utility getAccessToken]];
+    [httpManager.requestSerializer setValue:token forHTTPHeaderField:@"Authorization"];
     
+    NSString *url = [NSString stringWithFormat:@"Frames/Fabric/%@", fabricKey];
+    [httpManager DELETE:url parameters:nil success:completed failure:errorBlock];
 }
 @end

@@ -11,6 +11,7 @@
 @interface FrameSelectionVC : UIViewController
 
 @property NSString *type;
+@property NSInteger frame_size;
 
 @property (weak, nonatomic) IBOutlet UIView *viewTextInput;
 @property (weak, nonatomic) IBOutlet UIView *viewCodeReader;

@@ -131,6 +131,14 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     FrameSelectionVC *fsvc = [storyboard instantiateViewControllerWithIdentifier:@"FrameSelectionVC"];
     fsvc.type = @"fabric";
+    NSString *vcExtrusion = [[Global sharedInstance].frame objectForKey:@"vcExtrusion"];
+    if ([vcExtrusion  isEqual: @"120mm"] || [vcExtrusion  isEqual: @"36mm"] || [vcExtrusion  isEqual: @"50mm"])
+    {
+        fsvc.frame_size = 2;
+    }
+    else{
+        fsvc.frame_size = 1;
+    }
     [self.navigationController pushViewController:fsvc animated:YES];
 }
 

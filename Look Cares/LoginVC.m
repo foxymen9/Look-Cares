@@ -74,8 +74,7 @@
             NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
             [prefs setObject:result forKey:@"CurrentUser"];
             
-            
-            
+                        
             if (self.isChecked) {
                 [prefs setObject:[NSNumber numberWithBool:true] forKey:@"RememberMe"];
             } else {
@@ -120,15 +119,17 @@
     NSString *email = self.txtEmail.text;
     NSString *password = self.txtPassword.text;
     
-//    if ([email isEqualToString:@""] || [password isEqualToString:@""]) {
-//        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"Please fill all fields!" preferredStyle:UIAlertControllerStyleAlert];
-//        UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
-//        [alert addAction:defaultAction];
-//        [self presentViewController:alert animated:YES completion:nil];
-//        return;
-//    }
-//    [self loginProcess:email password:password];
-    [self loginProcess:@"custadmin" password:@"p@ssword!"];
+    if ([email isEqualToString:@""] || [password isEqualToString:@""]) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"Please fill all fields!" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:defaultAction];
+        [self presentViewController:alert animated:YES completion:nil];
+        return;
+    }
+    [self loginProcess:email password:password];
+    
+    
+//    [self loginProcess:@"installer1" password:@"installer1"];
 }
 
 @end

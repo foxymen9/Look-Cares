@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Zww-VA-6q8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Zww-VA-6q8">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -831,7 +831,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LocationTableViewCell" id="G5o-m0-3Fp" customClass="LocationTableViewCell">
-                                                <rect key="frame" x="0.0" y="28" width="307" height="44"/>
+                                                <rect key="frame" x="0.0" y="28" width="306" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="G5o-m0-3Fp" id="L10-dS-0iB">
                                                     <rect key="frame" x="0.0" y="0.0" width="306" height="43"/>
@@ -1355,7 +1355,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wJ6-E4-XVQ">
                                 <rect key="frame" x="34.5" y="213" width="306" height="241"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo" translatesAutoresizingMaskIntoConstraints="NO" id="xdM-Jo-ph8">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="xdM-Jo-ph8">
                                         <rect key="frame" x="0.0" y="0.0" width="146" height="146"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="xdM-Jo-ph8" secondAttribute="height" multiplier="1:1" id="Kvr-bI-YfA"/>
@@ -1368,7 +1368,7 @@
                                             <action selector="onBtnSelect1:" destination="uup-Vu-B5w" eventType="touchUpInside" id="1FZ-R0-ZLD"/>
                                         </connections>
                                     </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_barcode" translatesAutoresizingMaskIntoConstraints="NO" id="pJG-J3-fHW">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="pJG-J3-fHW">
                                         <rect key="frame" x="160" y="0.0" width="146" height="146"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A1p-kD-nHk">
@@ -1441,6 +1441,7 @@
         <image name="chb_rounded" width="36" height="36"/>
         <image name="company-logo" width="124" height="18"/>
         <image name="icon_barcode" width="168" height="168"/>
+        <image name="image_placeholder" width="112" height="112"/>
         <image name="photo" width="168" height="168"/>
         <image name="pin" width="8" height="12"/>
         <image name="pin_big" width="10" height="12"/>

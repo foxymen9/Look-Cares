@@ -41,10 +41,11 @@
                                                                                 action:@selector(handleTapSubView:)];
     [self.viewTextInput addGestureRecognizer:singleTap];
     if ([self.type isEqualToString:@"frame"]) {
-        [self.txtSerialNumber setText:@"SN06281600015"];
+        [self.txtSerialNumber setText:@"SN09271600023"];
         [self.lbl_title setText:@"Frame Selection"];
     }
     else if ([self.type isEqualToString:@"fabric"]) {
+        [self.txtSerialNumber setText:@"SN10031600020"];
         [self.lbl_title setText:@"Fabric Selection"];
     }
     
@@ -219,6 +220,55 @@
     }];
 }
 
+- (void)getFabric:(NSString*) number{
+    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    WebConnector *webConnector = [[WebConnector alloc] init];
+    [webConnector getFabric:number completionHandler:^(NSURLSessionTask *task, id responseObject)  {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        
+        NSMutableDictionary *result = (NSMutableDictionary *)responseObject;
+        if (result) {
+            NSString *clientKey =  [[Global sharedInstance].selectedClient objectForKey:@"kLookClient"];
+            NSString *clientLocationKey = [[Global sharedInstance].selectedLocation objectForKey:@"kLookClientCustomer"];
+            NSString *frameKey = [[Global sharedInstance].frame objectForKey:@"kFrame"];
+            WebConnector *webConnector = [[WebConnector alloc] init];
+            [webConnector addFabric:number clientKey:clientKey clientLocationKey:clientLocationKey frameKey:frameKey completionHandler:^(NSURLSessionTask *task, id responseObject){
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+        
+                NSMutableDictionary *result = (NSMutableDictionary *)responseObject;
+                NSLog(@"AddFabric:@%@", result);
+                if (result) {
+                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                    if (_frame_size == 2) {
+                        FrameSelectionVC *fsvc = [storyboard instantiateViewControllerWithIdentifier:@"FrameSelectionVC"];
+                        fsvc.type = @"fabric";
+                        fsvc.frame_size = 1;
+                        [self.navigationController pushViewController:fsvc animated:YES];
+                    }
+                    else
+                    {
+                        TakePictureVC *ilsvc = [storyboard instantiateViewControllerWithIdentifier:@"TakePictureVC"];
+                        [self.navigationController pushViewController:ilsvc animated:YES];
+                    }
+                }
+            } errorHandler:^(NSURLSessionTask *operation, NSError *error) {
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"Failed to upload." preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+                [alert addAction:defaultAction];
+                [self presentViewController:alert animated:YES completion:nil];
+            }];
+        }
+    } errorHandler:^(NSURLSessionTask *operation, NSError *error) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"Invalid Serial Number." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:defaultAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }];
+}
 
 - (IBAction)segBtnTapped:(id)sender {
     if (self.segmentedControl.selectedSegmentIndex == 0) {
@@ -273,9 +323,9 @@
     }
     else
     {
+        [self getFabric:serialNumber];
         [Global sharedInstance].fabricSerialNumber = serialNumber;
-        TakePictureVC *ilsvc = [storyboard instantiateViewControllerWithIdentifier:@"TakePictureVC"];
-        [self.navigationController pushViewController:ilsvc animated:YES];
+        
     }
 }
 

@@ -16,6 +16,9 @@
 @interface RemoveFabricVC ()
 {
     BOOL isFirstImage, isSecondImage;
+    NSString *fabricKey1, *fabricKey2;
+    NSArray *fabrics;
+    NSInteger stage_status;
 }
 @end
 
@@ -27,25 +30,27 @@
     isFirstImage = false;
     isSecondImage = false;
     [self updateImageStatus];
-    if ([Global sharedInstance].fabrics.count > 0)
+    fabrics = [Global sharedInstance].fabrics;
+    if (fabrics.count > 0)
     {
-        NSString *imgUrl = [[[Global sharedInstance].fabrics objectAtIndex:0] objectForKey:@"vcFileName"];
+        NSString *strFileName = [[[Global sharedInstance].fabrics objectAtIndex:0] objectForKey:@"vcFileName"];
+        NSString *imgUrl = [NSString stringWithFormat:@"http://files.lookcares.com/files/%@", strFileName];
         NSURL *url = [NSURL URLWithString:imgUrl];
         NSData *data = [NSData dataWithContentsOfURL:url];
         UIImage *image = [UIImage imageWithData:data];
         self.img1.image = image;
-//        dispatch_async(dispatch_get_global_queue(0,0), ^{
-//            NSData * data = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString:imgUrl]];
-//            if ( data == nil )
-//                return;
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                // WARNING: is the cell still using the same data by this point??
-//                self.img1.image = [UIImage imageWithData: data];
-//            });
-//        });
+        fabricKey1 = [fabrics[0] objectForKey:@"kFabric"];
         
-//        NSData * imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString:imgUrl]];
-//        self.img1.image = [UIImage imageWithData: imageData];
+        if (fabrics.count > 1)
+        {
+            fabricKey2 = [fabrics[1] objectForKey:@"kFabric"];
+            NSString *strFileName2 = [[[Global sharedInstance].fabrics objectAtIndex:0] objectForKey:@"vcFileName"];
+            NSString *imgUrl2 = [NSString stringWithFormat:@"http://files.lookcares.com/files/%@", strFileName2];
+            NSURL *url2 = [NSURL URLWithString:imgUrl2];
+            NSData *data2 = [NSData dataWithContentsOfURL:url2];
+            UIImage *image = [UIImage imageWithData:data2];
+            self.img2.image = image;
+        }
     }
 }
 
@@ -75,8 +80,37 @@
         [self.btnSelect2 setImage:nil forState:UIControlStateNormal];
 }
 
--(void) removeFabric {
+-(void) removeFabric:(NSString*)fabricKey {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
+    WebConnector *webConnector = [[WebConnector alloc] init];
+    [webConnector removeFabric:fabricKey completionHandler:^(NSURLSessionTask *task, id responseObject) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        
+        NSMutableDictionary *result = (NSMutableDictionary *)responseObject;
+        NSLog(@"clients:@%@", result);
+        if (result) {
+            [self toNextController];
+        }
+
+    } errorHandler:^(NSURLSessionTask *operation, NSError *error) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [self toNextController];
+    }];
+}
+-(void) toNextController {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    FrameSelectionVC *fsvc = [storyboard instantiateViewControllerWithIdentifier:@"FrameSelectionVC"];
+    fsvc.type = @"fabric";
+    NSString *vcExtrusion = [[Global sharedInstance].frame objectForKey:@"vcExtrusion"];
+    if ([vcExtrusion  isEqual: @"120mm"] || [vcExtrusion  isEqual: @"36mm"] || [vcExtrusion  isEqual: @"50mm"])
+    {
+        fsvc.frame_size = stage_status;
+    }
+    else{
+        fsvc.frame_size = 1;
+    }
+    [self.navigationController pushViewController:fsvc animated:YES];
 }
 
 - (IBAction)onBtnSelect1:(id)sender {
@@ -90,13 +124,41 @@
 }
 
 - (IBAction)onBtnRemove:(id)sender {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    //    InStoreLocationSelectionVC *ilsvc = [storyboard instantiateViewControllerWithIdentifier:@"InStoreLocationSelectionVC"];
-    //    [self.navigationController pushViewController:ilsvc animated:YES];
     
-    FrameSelectionVC *fsvc = [storyboard instantiateViewControllerWithIdentifier:@"FrameSelectionVC"];
-    fsvc.type = @"fabric";
-    [self.navigationController pushViewController:fsvc animated:YES];
+    NSInteger fabric_count = fabrics.count;
+    if (fabric_count == 2 && isFirstImage && isSecondImage) {
+        stage_status = 2;
+        WebConnector *webConnector = [[WebConnector alloc] init];
+        [webConnector removeFabric:fabricKey1 completionHandler:^(NSURLSessionTask *task, id responseObject) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            
+            NSMutableDictionary *result = (NSMutableDictionary *)responseObject;
+            NSLog(@"clients:@%@", result);
+            if (result) {
+                [self removeFabric:fabricKey2];
+            }
+            
+        } errorHandler:^(NSURLSessionTask *operation, NSError *error) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        }];
+    }
+    else if (fabric_count == 2 && isFirstImage) {
+        stage_status = 1;
+        [self removeFabric:fabricKey1];
+    }
+    else if (fabric_count == 2 && isSecondImage) {
+        stage_status = 1;
+        [self removeFabric:fabricKey2];
+    }
+    else if (isFirstImage) {
+        stage_status = 1;
+        [self removeFabric:fabricKey1];
+        
+    }
+    else if (isSecondImage) {
+        stage_status = 1;
+        [self removeFabric:fabricKey2];
+    }
 }
 
 - (IBAction)onBtnBack:(id)sender {
