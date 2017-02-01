@@ -44,7 +44,7 @@
         if (fabrics.count > 1)
         {
             fabricKey2 = [fabrics[1] objectForKey:@"kFabric"];
-            NSString *strFileName2 = [[[Global sharedInstance].fabrics objectAtIndex:0] objectForKey:@"vcFileName"];
+            NSString *strFileName2 = [[[Global sharedInstance].fabrics objectAtIndex:1] objectForKey:@"vcFileName"];
             NSString *imgUrl2 = [NSString stringWithFormat:@"http://files.lookcares.com/files/%@", strFileName2];
             NSURL *url2 = [NSURL URLWithString:imgUrl2];
             NSData *data2 = [NSData dataWithContentsOfURL:url2];
@@ -89,13 +89,11 @@
         
         NSMutableDictionary *result = (NSMutableDictionary *)responseObject;
         NSLog(@"clients:@%@", result);
-        if (result) {
-            [self toNextController];
-        }
+        [self toNextController];
 
     } errorHandler:^(NSURLSessionTask *operation, NSError *error) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [self toNextController];
+//        [self toNextController];
     }];
 }
 -(void) toNextController {
@@ -134,12 +132,14 @@
             
             NSMutableDictionary *result = (NSMutableDictionary *)responseObject;
             NSLog(@"clients:@%@", result);
-            if (result) {
-                [self removeFabric:fabricKey2];
-            }
+            [self removeFabric:fabricKey2];
             
         } errorHandler:^(NSURLSessionTask *operation, NSError *error) {
             [MBProgressHUD hideHUDForView:self.view animated:YES];
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"Failed to remove" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+            [alert addAction:defaultAction];
+            [self presentViewController:alert animated:YES completion:nil];
         }];
     }
     else if (fabric_count == 2 && isFirstImage) {
@@ -151,12 +151,12 @@
         [self removeFabric:fabricKey2];
     }
     else if (isFirstImage) {
-        stage_status = 1;
+        stage_status = 2;
         [self removeFabric:fabricKey1];
         
     }
     else if (isSecondImage) {
-        stage_status = 1;
+        stage_status = 2;
         [self removeFabric:fabricKey2];
     }
 }

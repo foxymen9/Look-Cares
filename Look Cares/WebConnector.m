@@ -85,6 +85,21 @@
     [httpManager POST:@"Frames/Fabric" parameters:parameters success:completed failure:errorBlock];
     
 }
+- (void)upload:(NSString *)frameKey image:(UIImage*)image completionHandler:(CompleteBlock)completed errorHandler:(ErrorBlock)errorBlock {
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    [parameters setObject:frameKey forKey:@"kFrame"];
+    
+    httpManager.requestSerializer = [AFJSONRequestSerializer serializer];
+    NSString *token = [NSString stringWithFormat:@"base %@", [Utility getAccessToken]];
+    [httpManager.requestSerializer setValue:token forHTTPHeaderField:@"Authorization"];
+
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
+    [httpManager POST:@"Frames/Upload" parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        [formData appendPartWithFileData:imageData name:@"image" fileName:@"image.jpg" mimeType:@"image/jpeg"];
+        
+    } success:completed failure:errorBlock];
+
+}
 //- (void)addFabric:(NSString *)clientKey clientLocationKey:(NSString *)clientLocationKey frameKey:(NSString*)frameKey height:(NSString*)height width:(NSString*)width extrusion:(NSString*)extrusion image:(UIImage*)image completionHandler:(CompleteBlock)completed errorHandler:(ErrorBlock)errorBlock {
 //    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
 //    [parameters setObject:clientKey forKey:@"ClientKey"];

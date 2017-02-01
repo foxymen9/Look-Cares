@@ -26,5 +26,6 @@ typedef void (^ErrorBlock)(NSURLSessionTask *operation, NSError *error);
 - (void)getFabric:(NSString*)serialNumber  completionHandler:(CompleteBlock)completed errorHandler:(ErrorBlock)errorBlock;
 - (void)addFabric:(NSString*) serialNumber clientKey:(NSString *)clientKey clientLocationKey:(NSString *)clientLocationKey frameKey:(NSString*)frameKey completionHandler:(CompleteBlock)completed errorHandler:(ErrorBlock)errorBlock;
 - (void)removeFabric:(NSString*)fabricKey  completionHandler:(CompleteBlock)completed errorHandler:(ErrorBlock)errorBlock;
+- (void)upload:(NSString *)frameKey image:(UIImage*)image completionHandler:(CompleteBlock)completed errorHandler:(ErrorBlock)errorBlock;
 //- (void)addFabric:(NSString *)clientKey clientLocationKey:(NSString *)clientLocationKey frameKey:(NSString*)frameKey height:(NSString*)height width:(NSString*)width extrusion:(NSString*)extrusion image:(UIImage*)image completionHandler:(CompleteBlock)completed errorHandler:(ErrorBlock)errorBlock;
 @end
