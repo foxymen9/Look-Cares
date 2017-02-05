@@ -27,6 +27,7 @@
 		05BBD5951DCF7DA800AECBE8 /* FabricSelectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 05BBD5941DCF7DA800AECBE8 /* FabricSelectionVC.m */; };
 		05BBD5981DCF7E7D00AECBE8 /* TakePictureVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 05BBD5971DCF7E7D00AECBE8 /* TakePictureVC.m */; };
 		96E8495B0059C739AD80F378 /* Pods_Look_Cares.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B9AAC86A173922E28B445B /* Pods_Look_Cares.framework */; };
+		B79DB5CB1E472DCB0086EA6E /* RemoveFabricSingleVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B79DB5CA1E472DCB0086EA6E /* RemoveFabricSingleVC.m */; };
 		F44A1B8755F027EF09657220 /* Pods_Look_CaresTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 611D218F3F0D7F6D39B2B9C1 /* Pods_Look_CaresTests.framework */; };
 		FE03D3138D2D88087E3F5362 /* Pods_Look_CaresUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A74C08B6A4EC6C893E6D2D6 /* Pods_Look_CaresUITests.framework */; };
 /* End PBXBuildFile section */
@@ -96,6 +97,8 @@
 		9B7F35661AA68C0B9469173E /* Pods-Look CaresTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Look CaresTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Look CaresTests/Pods-Look CaresTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A7FF8A0A8AB4BD6F9BA4C3FE /* Pods-Look CaresUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Look CaresUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Look CaresUITests/Pods-Look CaresUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A9B9AAC86A173922E28B445B /* Pods_Look_Cares.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Look_Cares.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B79DB5C91E472DCB0086EA6E /* RemoveFabricSingleVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoveFabricSingleVC.h; sourceTree = "<group>"; };
+		B79DB5CA1E472DCB0086EA6E /* RemoveFabricSingleVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoveFabricSingleVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +209,8 @@
 				0518D04C1DCDE2730048849D /* InStoreLocationSelectionVC.m */,
 				05BBD5901DCF7A4A00AECBE8 /* RemoveFabricVC.h */,
 				05BBD5911DCF7A4A00AECBE8 /* RemoveFabricVC.m */,
+				B79DB5C91E472DCB0086EA6E /* RemoveFabricSingleVC.h */,
+				B79DB5CA1E472DCB0086EA6E /* RemoveFabricSingleVC.m */,
 				05BBD5931DCF7DA800AECBE8 /* FabricSelectionVC.h */,
 				05BBD5941DCF7DA800AECBE8 /* FabricSelectionVC.m */,
 				05BBD5961DCF7E7D00AECBE8 /* TakePictureVC.h */,
@@ -360,7 +365,7 @@
 				TargetAttributes = {
 					0518D00D1DCD09B70048849D = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = 9FX43XXU4W;
+						DevelopmentTeam = 2Q52UJ4449;
 						ProvisioningStyle = Manual;
 					};
 					0518D0261DCD09B80048849D = {
@@ -570,6 +575,7 @@
 				05BBD5921DCF7A4A00AECBE8 /* RemoveFabricVC.m in Sources */,
 				056714981DCFA54000FB7743 /* MTBBarcodeScanner.m in Sources */,
 				05BBD58F1DCF651200AECBE8 /* LocationTableViewCell.m in Sources */,
+				B79DB5CB1E472DCB0086EA6E /* RemoveFabricSingleVC.m in Sources */,
 				0518D0191DCD09B70048849D /* LoginVC.m in Sources */,
 				0518D0581DCF07DC0048849D /* WebConnector.m in Sources */,
 				0518D0161DCD09B70048849D /* AppDelegate.m in Sources */,
@@ -728,13 +734,13 @@
 			baseConfigurationReference = 94EDC44F0FB3B4FEE6E414B7 /* Pods-Look Cares.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 9FX43XXU4W;
+				DEVELOPMENT_TEAM = 2Q52UJ4449;
 				INFOPLIST_FILE = "Look Cares/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.lookcares.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lookcompany.lookcares;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "45e878a0-9122-4ba7-ae23-7edf15be7eae";
-				PROVISIONING_PROFILE_SPECIFIER = "lookcares test dev";
+				PROVISIONING_PROFILE = "2af65a9e-0f90-4a84-81ab-c709b5117e20";
+				PROVISIONING_PROFILE_SPECIFIER = LookCares_Dev;
 			};
 			name = Debug;
 		};
@@ -743,13 +749,14 @@
 			baseConfigurationReference = 8E92C777DF5396ACFAFF7064 /* Pods-Look Cares.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 9FX43XXU4W;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = 2Q52UJ4449;
 				INFOPLIST_FILE = "Look Cares/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.lookcares.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lookcompany.lookcares;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "45e878a0-9122-4ba7-ae23-7edf15be7eae";
-				PROVISIONING_PROFILE_SPECIFIER = "lookcares test dev";
+				PROVISIONING_PROFILE = "2c97e595-bf7b-49c2-938e-35d01427211c";
+				PROVISIONING_PROFILE_SPECIFIER = LookCares_Dist;
 			};
 			name = Release;
 		};

@@ -40,6 +40,7 @@
         [self.txtPassword setText:pass];
         self.isChecked = true;
         [self updateCheckBox];
+        [self loginProcess:user password:pass];
     }
     else
     {

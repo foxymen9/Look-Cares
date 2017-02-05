@@ -8,8 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-#define BASE_URL         @"http://tlcapi-proddeployment.azurewebsites.net/"
 //#define BASE_URL         @"http://192.168.0.82:56789/"
+//#define FILE_SERVER_URL     @"";
+
+#define BASE_URL         @"http://tlcapi-proddeployment.azurewebsites.net/"
+#define FILE_SERVER_URL     @"http://files.lookcares.com/files/";
 
 @interface Global : NSObject
 

@@ -12,6 +12,7 @@
 #import "MBProgressHUD.h"
 #import "Global.h"
 #import "WebConnector.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface RemoveFabricVC ()
 {
@@ -34,11 +35,9 @@
     if (fabrics.count > 0)
     {
         NSString *strFileName = [[[Global sharedInstance].fabrics objectAtIndex:0] objectForKey:@"vcFileName"];
-        NSString *imgUrl = [NSString stringWithFormat:@"http://files.lookcares.com/files/%@", strFileName];
-        NSURL *url = [NSURL URLWithString:imgUrl];
-        NSData *data = [NSData dataWithContentsOfURL:url];
-        UIImage *image = [UIImage imageWithData:data];
-        self.img1.image = image;
+        NSString *imgUrl = [NSString stringWithFormat:@"http://files.lookcares.com/files/%@",strFileName];
+//        NSString *imgUrl = [NSString stringWithFormat:@"%@", strFileName];
+        [self.img1 setImageWithURL:[NSURL URLWithString:imgUrl] placeholderImage:[UIImage imageNamed:@"image_placeholder"]];
         fabricKey1 = [fabrics[0] objectForKey:@"kFabric"];
         
         if (fabrics.count > 1)
@@ -46,10 +45,8 @@
             fabricKey2 = [fabrics[1] objectForKey:@"kFabric"];
             NSString *strFileName2 = [[[Global sharedInstance].fabrics objectAtIndex:1] objectForKey:@"vcFileName"];
             NSString *imgUrl2 = [NSString stringWithFormat:@"http://files.lookcares.com/files/%@", strFileName2];
-            NSURL *url2 = [NSURL URLWithString:imgUrl2];
-            NSData *data2 = [NSData dataWithContentsOfURL:url2];
-            UIImage *image = [UIImage imageWithData:data2];
-            self.img2.image = image;
+//            NSString *imgUrl2 = [NSString stringWithFormat:@"%@", strFileName2];
+            [self.img2 setImageWithURL:[NSURL URLWithString:imgUrl2] placeholderImage:[UIImage imageNamed:@"image_placeholder"]];
         }
     }
 }

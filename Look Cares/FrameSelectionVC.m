@@ -9,6 +9,7 @@
 #import "FrameSelectionVC.h"
 #import "InstoreLocationSelectionVC.h"
 #import "RemoveFabricVC.h"
+#import "RemoveFabricSingleVC.h"
 #import "MTBBarcodeScanner.h"
 #import "TakePictureVC.h"
 #import "MBProgressHUD.h"
@@ -41,11 +42,11 @@
                                                                                 action:@selector(handleTapSubView:)];
     [self.viewTextInput addGestureRecognizer:singleTap];
     if ([self.type isEqualToString:@"frame"]) {
-//        [self.txtSerialNumber setText:@"SN201607041239"];
+        [self.txtSerialNumber setText:@"SN06281600013"];
         [self.lbl_title setText:@"Frame Selection"];
     }
     else if ([self.type isEqualToString:@"fabric"]) {
-//        [self.txtSerialNumber setText:@"SN07191600489"];
+        [self.txtSerialNumber setText:@"SN07191600488"];
         [self.lbl_title setText:@"Fabric Selection"];
     }
     
@@ -196,6 +197,8 @@
             frame = [result objectForKey:@"frame"];
             fabrics = [result objectForKey:@"fabrics"];
             NSString *checkInstall = [frame objectForKey:@"vcInstalled"];
+            NSString *vcExtrusion = [frame objectForKey:@"vcExtrusion"];
+
             [self saveToGlobal];
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             NSLog(@"frame:%@", frame);
@@ -207,8 +210,14 @@
             }
             else
             {
-                RemoveFabricVC *rfvc = [storyboard instantiateViewControllerWithIdentifier:@"RemoveFabricVC"];
-                [self.navigationController pushViewController:rfvc animated:YES];
+                if ([vcExtrusion  isEqual: @"120mm"] || [vcExtrusion  isEqual: @"36mm"] || [vcExtrusion  isEqual: @"50mm"]){
+                    RemoveFabricVC *rfvc = [storyboard instantiateViewControllerWithIdentifier:@"RemoveFabricVC"];
+                    [self.navigationController pushViewController:rfvc animated:YES];
+                }
+                else{
+                    RemoveFabricSingleVC *rfvc = [storyboard instantiateViewControllerWithIdentifier:@"RemoveFabricSingleVC"];
+                    [self.navigationController pushViewController:rfvc animated:YES];
+                }
             }
         }
     } errorHandler:^(NSURLSessionTask *operation, NSError *error) {

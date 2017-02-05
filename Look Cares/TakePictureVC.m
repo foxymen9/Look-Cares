@@ -111,6 +111,9 @@
         fsvc.type = @"frame";
     }];
     UIAlertAction *noAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+        [prefs setObject:[NSNumber numberWithBool:false] forKey:@"RememberMe"];
+        
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         LoginVC *lVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginVC"];
         [self.navigationController pushViewController:lVC animated:YES];
