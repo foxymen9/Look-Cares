@@ -316,16 +316,18 @@
 
 - (IBAction)onBtnDone:(id)sender {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    if (self.segmentedControl.selectedSegmentIndex == 1)
+    if (self.segmentedControl.selectedSegmentIndex == 0)
     {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"Please select the serial number. NFC is not available for now." preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:defaultAction];
         [self presentViewController:alert animated:YES completion:nil];
         return;
-    }
-    if (self.segmentedControl.selectedSegmentIndex == 2)
+    } else if (self.segmentedControl.selectedSegmentIndex == 1)
+        serialNumber = self.lblSerialNumber.text;
+    else {
         serialNumber = self.txtSerialNumber.text;
+    }
     if ([self.type isEqualToString:@"frame"])
     {
         [self getFrame:serialNumber];
