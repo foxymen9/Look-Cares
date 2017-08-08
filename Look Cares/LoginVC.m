@@ -27,6 +27,24 @@
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                 action:@selector(handleTapSubView:)];
     [self.viewSub addGestureRecognizer:singleTap];
+    
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    if ([[prefs objectForKey:@"RememberMe"] boolValue] == true) {
+        NSDictionary *owner = [prefs objectForKey:@"CurrentUser"];
+        NSLog(@"%@", owner);
+        NSString *user = [prefs objectForKey:@"Email"];
+        [self.txtEmail setText:user];
+        NSString *pass = [prefs objectForKey:@"Password"];
+        [self.txtPassword setText:pass];
+        self.isChecked = true;
+        [self updateCheckBox];
+        [self loginProcess:user password:pass];
+    }
+    else
+    {
+        self.isChecked = false;
+        [self updateCheckBox];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -40,7 +58,6 @@
         [self.txtPassword setText:pass];
         self.isChecked = true;
         [self updateCheckBox];
-        [self loginProcess:user password:pass];
     }
     else
     {
