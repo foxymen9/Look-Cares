@@ -42,11 +42,11 @@
                                                                                 action:@selector(handleTapSubView:)];
     [self.viewTextInput addGestureRecognizer:singleTap];
     if ([self.type isEqualToString:@"frame"]) {
-        [self.txtSerialNumber setText:@"SN06281600013"];
+//        [self.txtSerialNumber setText:@"SN06281600013"];
         [self.lbl_title setText:@"Frame Selection"];
     }
     else if ([self.type isEqualToString:@"fabric"]) {
-        [self.txtSerialNumber setText:@"SN07191600488"];
+//        [self.txtSerialNumber setText:@"SN07191600488"];
         [self.lbl_title setText:@"Fabric Selection"];
     }
     
